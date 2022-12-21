@@ -1,16 +1,13 @@
-const { Server } = require("socket.io")
-const server = new Server(8000);
-
-const { ws } = require("./config/connectToFMP")
-
 require("dotenv").config()
+const PORT=3000
 
+const app = require('express')();
+const http = require('http').Server(app);
+const io = require('socket.io')(http);
+const { handleOnClientConnected } = require("./utils/handlers");
 
-server.on("connection", (socket) => {
+app.get('/',(req,res)=>res.end("Hello from server!"))
 
-  ws.on("message", (data) => socket.emit("SOC_DATA",data));
+io.on("connection", handleOnClientConnected );
 
-  socket.on("disconnect", () => {
-    console.info(`Client gone [id=${socket.id}]`);
-  });
-});
+http.listen(process.env.PORT || PORT);
