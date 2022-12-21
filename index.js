@@ -1,13 +1,13 @@
 require("dotenv").config()
-// const PORT=3000
+const PORT=3000
 
-// const app = require('express')();
-// const http = require('http').Server(app);
-const io = require('socket.io')(3000);
+const app = require('express')();
+const http = require('http').Server(app);
+const io = require('socket.io')(http);
 const { handleOnClientConnected } = require("./utils/handlers");
 
-// app.get('/',(req,res)=>res.end("Hello from server!"))
+app.get('/',(req,res)=>res.end("Hello from server!"))
 
 io.on("connection", handleOnClientConnected );
 
-// http.listen(process.env.PORT || PORT);
+http.listen(process.env.PORT || PORT,()=>console.log("server listening!"));
