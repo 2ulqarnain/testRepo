@@ -1,4 +1,4 @@
-const { ws } = require("./config/connectToFMP");
+const { ws } = require("../config/connectToFMP");
 
 const handleOnClientConnected = socket => {
 
